@@ -1,0 +1,1 @@
+WARNING = "\u26A0\uFE0F"
