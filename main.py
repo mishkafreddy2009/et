@@ -14,6 +14,7 @@ logger = telebot.logger
 def get_args(msg):
     return msg.text.split()[1:]
 
+
 @bot.message_handler(commands=["start"])
 def send_welcome(msg):
     bot.send_message(msg.chat.id, messages.GREETING)
@@ -27,8 +28,7 @@ def add_spending(msg):
     args = get_args(msg)
 
     if not args:
-        bot.send_message(msg.chat.id,
-                         f"{symbols.WARNING} введите сумму траты")
+        bot.send_message(msg.chat.id, f"{symbols.WARNING} введите сумму траты")
         return
 
     try:
@@ -40,32 +40,34 @@ def add_spending(msg):
 
     cursor.execute(f"insert into spending (amount) values ({spending_amount});")
 
-    conn.commit()
-
-    cursor.execute("select * from spending;")
-    data = cursor.fetchall()
+    bot.send_message(msg.chat.id, f"{symbols.SUCCESS} трата успешно добавлена")
 
     cursor.close()
-    # print(data)
+
+    conn.commit()
+
 
 @bot.message_handler(commands=["stats"])
 def send_stats(msg):
     conn = sqlite3.connect(SQLITE_DB_FILE)
     cursor = conn.cursor()
-    
+
     cursor.execute("select amount from spending;")
+    all_data = cursor.fetchall()
+    cursor.close()
+    total_spending = sum([amount for amounts in all_data for amount in amounts])
+    bot.send_message(msg.chat.id,
+                     symbols.INFO + messages.get_stats(total_spending),
+                     parse_mode="Markdown")
 
-    data = cursor.fetchall()
 
-    total_spending = sum([amount for amounts in data for amount in amounts])
-
-#     bot.send_message(msg.chat.id, f"""статистика\n
-# расходы за время\n{total_spending}
-#                      """)
-    bot.send_message(msg.chat.id, messages.get_stats(total_spending))
-    
-
-    
+@bot.message_handler(commands=["devdel"])
+def remove(msg):
+    conn = sqlite3.connect(SQLITE_DB_FILE)
+    cursor = conn.cursor()
+    cursor.execute("delete from spending;")
+    cursor.close()
+    conn.commit()
 
 
 if __name__ == "__main__":
