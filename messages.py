@@ -1,4 +1,4 @@
-GREETING = """бот для введения личных расходов.
+GREETING = """бот для введения личных расходов
 
 команды:
 /start - приветственное сообщение
@@ -9,10 +9,13 @@ GREETING = """бот для введения личных расходов.
 """
 
 
-def get_stats(total_spending: int = 0) -> str:
-    STATS = f"""статистика
+def get_stats(today_spending=0, total_spending=0) -> str:
+    return f"""статистика
+
+расходы за сегодня
+*{today_spending} руб*
 
 расходы за все время
 *{total_spending} руб*
 """
-    return STATS
+
