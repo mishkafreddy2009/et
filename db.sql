@@ -4,11 +4,11 @@ create table categories (
     ordering int not null
 );
 
-create table spending (
+create table spendings (
     id integer primary key,
     amount integer not null,
     category_id integer,
-    spend_date timestamp default current_timestamp not null,
+    spending_date timestamp default current_timestamp not null,
     foreign key(category_id) references categories(id)
 );
 
@@ -19,6 +19,3 @@ insert into categories (name, ordering) values
     ('развлечения', 40),
     ('обучение', 50),
     ('вредные привычки', 60);
-
-insert into spending (amount, category_id) values
-    (500, 1);
