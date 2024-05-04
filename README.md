@@ -1,6 +1,7 @@
 # finbot
 
 бот для ведения личных расходов
+![image_2024-05-04_19-46-14](https://github.com/mishkafreddy2009/finbot/assets/144558236/03305b12-4a87-4552-b27e-1faafdb4f2a6)
 
 ## todo
 - [x] выбрать библиотеку;
