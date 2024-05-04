@@ -21,3 +21,11 @@ def get_stats(today_spending: int=0, total_spending: int=0, **category_spendings
     for c, s in category_spendings.items():
         msg += f"{c} - *{s} руб*\n"
     return msg
+
+def get_categories(categories):
+    msg = f"""
+категории
+"""
+    for category_long, category_short in categories.items():
+        msg += f"*{category_short}* {category_long}\n"
+    return msg
