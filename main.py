@@ -1,13 +1,23 @@
-import telebot
-import sqlite3
-import logging
-from config import TOKEN
 import symbols
 import messages
-from datetime import date
 
+from datetime import date
+import os
+import sys
+import logging
+
+import telebot
+import sqlite3
+
+
+TOKEN = os.getenv("ET_TOKEN")
+
+if not TOKEN:
+    print("[err] token not found")
+    sys.exit(1)
 
 bot = telebot.TeleBot(TOKEN, parse_mode="markdown")
+
 logger = telebot.logger
 
 def get_first_letters(words: list[str]):
@@ -135,5 +145,5 @@ def clear(message):
                      f"{symbols.SUCCESS} удалено")
 
 if __name__ == "__main__":
-    # logger.setLevel(logging.DEBUG)
+    logger.setLevel(logging.DEBUG)
     bot.infinity_polling()
