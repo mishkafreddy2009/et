@@ -1,10 +1,11 @@
-GREETING = """бот для ведения личных расходов
+GREETING = """et - трекер расходов
 
 команды:
 */start* - приветственное сообщение
 */stats* - статистика по расходам
 */add* - добавить строку расходов, пример: "/add 500 б" (добавить 500 рублей в категорию бензин)
-*/categories* - посмотреть доступные категории
+*/addcategory* - добавить свою категорию (макс. 10)
+*/categories* - посмотреть доступные категории и их сокращенное обращение к ним
 """
 
 def get_stats(today_spending: int=0, total_spending: int=0, **category_spendings):
@@ -25,6 +26,7 @@ def get_stats(today_spending: int=0, total_spending: int=0, **category_spendings
 def get_categories(categories):
     msg = f"""
 категории
+
 """
     for category_long, category_short in categories.items():
         msg += f"*{category_short}* {category_long}\n"
